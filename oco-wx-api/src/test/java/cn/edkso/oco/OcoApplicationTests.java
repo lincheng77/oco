@@ -1,10 +1,10 @@
-package cn.edkso.ocowxapi;
+package cn.edkso.oco;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class OcoWxApiApplicationTests {
+class OcoApplicationTests {
 
     @Test
     void contextLoads() {
