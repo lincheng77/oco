@@ -103,10 +103,12 @@
             <version>2.9.2</version>
         </dependency>
 
+        <!--后端验证功能依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
