@@ -15,10 +15,10 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    @Value("${emos.jwt.secret}")
+    @Value("${oco.jwt.secret}")
     private String secret;
 
-    @Value("${emos.jwt.expire}")
+    @Value("${oco.jwt.expire}")
     private int expire;
 
     public String createToken(int userId) {
