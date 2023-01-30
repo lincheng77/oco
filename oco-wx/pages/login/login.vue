@@ -15,8 +15,18 @@
 	export default {
 		data() {
 			return {
-				
+
 			};
+		}
+		,methods: {
+			login: function(){
+				
+			},
+			toRegister: function() {
+				uni.navigateTo({
+					url: "../register/register"
+				})
+			},
 		}
 	}
 </script>
