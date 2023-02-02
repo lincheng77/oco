@@ -1,7 +1,8 @@
 package cn.edkso.oco.service.impl;
 
 import cn.edkso.oco.controller.form.RegisterForm;
-import cn.edkso.oco.db.dao.TbUserDao;
+
+import cn.edkso.oco.db.dao.TbUserDAO;
 import cn.edkso.oco.db.pojo.TbUser;
 import cn.edkso.oco.exception.OcoException;
 import cn.edkso.oco.service.UserService;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -23,7 +25,7 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private TbUserDao tbUserDao;
+    private TbUserDAO userDao;
 
     @Value("${wx.app-id}")
     private String appId;
@@ -50,15 +52,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int registerUser(RegisterForm form) {
-        if (form.getRegisterCode().equals("000000")) {
-            boolean isHaveRootUser = tbUserDao.isHaveRootUser();
+        if ("000000".equals(form.getRegisterCode())) {
+            boolean isHaveRootUser = userDao.isHaveRootUser();
             if (!isHaveRootUser) {
+                String openId = getOpenId(form.getCode());
 
+                HashMap param=new HashMap();
+                param.put("openId", openId);
+                param.put("nickname", form.getNickname());
+                param.put("photo", form.getPhoto());
+                param.put("role", "[0]");
+                param.put("status", 1);
+                param.put("createTime", new Date());
+                param.put("root", true);
+
+                userDao.insert(param);
+
+                int id=userDao.searchIdByOpenId(openId);
             } else {
                 throw new OcoException("无法绑定超级管理员账号");
             }
         } else {
-            String openId = getOpenId(form.getCode());
+
 
         }
         return 0;

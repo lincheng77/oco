@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")
@@ -34,14 +35,14 @@ public class UserController {
     @Value("${oco.jwt.cache-expire}")
     private int cacheExpire;
 
-    @Value("${trtc.appid}")
-    private Integer appid;
-
-    @Value("${trtc.key}")
-    private String key;
-
-    @Value("${trtc.expire}")
-    private Integer expire;
+//    @Value("${trtc.appid}")
+//    private Integer appid;
+//
+//    @Value("${trtc.key}")
+//    private String key;
+//
+//    @Value("${trtc.expire}")
+//    private Integer expire;
 
     @PostMapping("/register")
     @ApiOperation("注册用户")
@@ -53,6 +54,8 @@ public class UserController {
         return R.ok("用户注册成功").put("token",token).put("permission",permsSet);
     }
 
-    private void saveCacheToken(String token, int id) {
+    private void saveCacheToken(String token,int userId){
+        redisTemplate.opsForValue().set(token,userId+"",cacheExpire, TimeUnit.DAYS);
     }
+
 }
