@@ -80,7 +80,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Set<String> searchUserPermissions(int id) {
+    public Set<String> searchUserPermissions(int userId) {
+        Set<String> permissions = userDao.searchUserPermissions(userId);
         return null;
     }
 }

@@ -46,16 +46,16 @@ public class UserController {
 
     @PostMapping("/register")
     @ApiOperation("注册用户")
-    public R register(@Valid @RequestBody RegisterForm form){
-        int id=userService.registerUser(form);
-        String token=jwtUtil.createToken(id);
-        Set<String> permsSet=userService.searchUserPermissions(id);
-        saveCacheToken(token,id);
-        return R.ok("用户注册成功").put("token",token).put("permission",permsSet);
+    public R register(@Valid @RequestBody RegisterForm form) {
+        int id = userService.registerUser(form);
+        String token = jwtUtil.createToken(id);
+        Set<String> permsSet = userService.searchUserPermissions(id);
+        saveCacheToken(token, id);
+        return R.ok("用户注册成功").put("token", token).put("permission", permsSet);
     }
 
-    private void saveCacheToken(String token,int userId){
-        redisTemplate.opsForValue().set(token,userId+"",cacheExpire, TimeUnit.DAYS);
+    private void saveCacheToken(String token, int userId) {
+        redisTemplate.opsForValue().set(token, userId + "", cacheExpire, TimeUnit.DAYS);
     }
 
 }
