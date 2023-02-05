@@ -10,4 +10,6 @@ public interface UserService {
     int registerUser(RegisterForm form);
 
     Set<String> searchUserPermissions(int id);
+
+    Integer login(String code);
 }

@@ -57,5 +57,9 @@ public class UserController {
     private void saveCacheToken(String token, int userId) {
         redisTemplate.opsForValue().set(token, userId + "", cacheExpire, TimeUnit.DAYS);
     }
+    
+    public R login(@Valid @RequestBody LoginForm form){
+
+    }
 
 }

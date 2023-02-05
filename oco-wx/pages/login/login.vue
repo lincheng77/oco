@@ -17,10 +17,35 @@
 			return {
 
 			};
-		}
-		,methods: {
-			login: function(){
-				
+		},
+		methods: {
+			login: function() {
+				let that = this
+				uni.login({
+					provider: "weixin",
+					success: function(resp) {
+						let code = resp.code
+						that.ajax(
+							that.url.login,
+							"POST", {
+								"code": code
+							},
+							function(resp) {
+								let permission = resp.data.permission
+								uni.setStorageSync("permission", permission)
+								//跳转到登陆页面
+								uni.navigateTo({
+									url: "../index/index"
+								})
+							})
+					},
+					fail: function(e) {
+						uni.showToast({
+							icon: "none",
+							title: "执行异常"
+						})
+					}
+				})
 			},
 			toRegister: function() {
 				uni.navigateTo({

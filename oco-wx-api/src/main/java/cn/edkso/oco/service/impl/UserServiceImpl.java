@@ -3,7 +3,6 @@ package cn.edkso.oco.service.impl;
 import cn.edkso.oco.controller.form.RegisterForm;
 
 import cn.edkso.oco.db.dao.TbUserDAO;
-import cn.edkso.oco.db.pojo.TbUser;
 import cn.edkso.oco.exception.OcoException;
 import cn.edkso.oco.service.UserService;
 import cn.hutool.http.HttpUtil;
@@ -85,5 +84,16 @@ public class UserServiceImpl implements UserService {
     public Set<String> searchUserPermissions(int userId) {
         Set<String> permissions = userDao.searchUserPermissions(userId);
         return permissions;
+    }
+
+    @Override
+    public Integer login(String code) {
+        String openId=getOpenId(code);
+        Integer id=userDao.searchIdByOpenId(openId);
+        if(id==null){
+            throw new OcoException("帐户不存在");
+        }
+
+        return id;
     }
 }
