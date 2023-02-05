@@ -69,6 +69,8 @@ public class UserServiceImpl implements UserService {
                 userDao.insert(param);
 
                 int id=userDao.searchIdByOpenId(openId);
+
+                return id;
             } else {
                 throw new OcoException("无法绑定超级管理员账号");
             }
@@ -82,6 +84,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Set<String> searchUserPermissions(int userId) {
         Set<String> permissions = userDao.searchUserPermissions(userId);
-        return null;
+        return permissions;
     }
 }

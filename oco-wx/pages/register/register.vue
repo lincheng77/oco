@@ -13,11 +13,23 @@
 	export default {
 		data() {
 			return {
-
+				registerCode: ""
 			}
 		},
 		methods: {
 			register: function() {
+				let that = this;
+
+
+				//校验邀请码
+				if (that.registerCode == null || that.registerCode.length == 0) {
+					uni.showToast({
+						icon: "none",
+						title: "邀请码不能为空"
+					})
+					return
+				}
+				//注册（登录）
 				uni.login({
 					provider: 'weixin',
 					success: function(resp) {
@@ -28,8 +40,29 @@
 							success: function(resp) {
 								let nickName = resp.userInfo.nickName;
 								let avatarUrl = resp.userInfo.avatarUrl;
-								console.log(nickName);
-								console.log(avatarUrl);
+								// console.log(nickName);
+								// console.log(avatarUrl);
+								let data = {
+									code: code,
+									nickname: nickName,
+									photo: avatarUrl,
+									registerCode: that.registerCode
+								}
+								console.log(that.$url)
+								that.$ajax(
+									that.$url.register,
+									"POST",
+									data,
+									function(resp) {
+										//设置权限
+										let permission = resp.data.permission
+										uni.setStorageSync("permission", permission)
+										console.log(permission)
+										//跳转到index页面
+										uni.navigateTo({
+											url: "../index/index"
+										})
+									})
 							}
 						});
 					}
