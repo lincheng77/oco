@@ -23,7 +23,8 @@
 	}
 </script>
 
-<style>
+<style lang="less">
+	@import url("index.less");
 	.content {
 		display: flex;
 		flex-direction: column;

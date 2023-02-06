@@ -22,6 +22,7 @@ export function createApp() {
 	let baseUrl = "http://localhost:8080/oco-wx-api"
 	app.config.globalProperties.$url = {
 		register: baseUrl + "/user/register",
+		login: baseUrl + "/user/login",
 	}
 	app.config.globalProperties.$ajax = function(url, method, data, fun) {
 		uni.request({

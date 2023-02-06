@@ -25,8 +25,8 @@
 					provider: "weixin",
 					success: function(resp) {
 						let code = resp.code
-						that.ajax(
-							that.url.login,
+						that.$ajax(
+							that.$url.login,
 							"POST", {
 								"code": code
 							},
