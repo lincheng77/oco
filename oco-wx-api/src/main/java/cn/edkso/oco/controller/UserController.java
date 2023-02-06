@@ -2,6 +2,7 @@ package cn.edkso.oco.controller;
 
 import cn.edkso.oco.common.util.R;
 import cn.edkso.oco.config.shiro.JwtUtil;
+import cn.edkso.oco.controller.form.LoginForm;
 import cn.edkso.oco.controller.form.RegisterForm;
 import cn.edkso.oco.service.UserService;
 import io.swagger.annotations.Api;
@@ -57,9 +58,17 @@ public class UserController {
     private void saveCacheToken(String token, int userId) {
         redisTemplate.opsForValue().set(token, userId + "", cacheExpire, TimeUnit.DAYS);
     }
-    
-    public R login(@Valid @RequestBody LoginForm form){
 
+    @PostMapping("login")
+    @ApiOperation("注册用户")
+    public R login(@Valid @RequestBody LoginForm form){
+        Integer id = userService.login(form.getCode());
+        String token = jwtUtil.createToken(id);
+        saveCacheToken(token, id);
+        Set<String> permissions = userService.searchUserPermissions(id);
+        return R.ok("登陆成功")
+                .put("token",token)
+                .put("permission", permissions);
     }
 
 }
